@@ -28,8 +28,8 @@ const PRODUCTS: Product[] = [
     weight: "1 KG",
     description: "Extra long grain, real aroma, and traditional taste. Aged to perfection and processed with state-of-the-art Sortex quality tech.",
     images: [
-      "public/assets/1Kg_front.jpeg",
-      "public/assets/1Kg_back.jpeg"
+      "assets/1Kg_front.jpeg",
+      "assets/1Kg_back.jpeg"
     ]
   },
   {
@@ -38,7 +38,7 @@ const PRODUCTS: Product[] = [
     weight: "5 KG",
     description: "Our signature family pack. The same premium quality in a traditional woven-style packaging for heritage preservation.",
     images: [
-      "public/assets/5kg_front.jpeg"
+      "assets/5kg_front.jpeg"
     ]
   }
 ];
