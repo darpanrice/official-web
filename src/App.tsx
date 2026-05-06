@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Menu, X, ChevronRight, ChevronLeft, ShoppingCart, MapPin, Phone, Instagram, Send, Star, ShieldCheck, Leaf } from 'lucide-react';
 
@@ -28,8 +28,8 @@ const PRODUCTS: Product[] = [
     weight: "1 KG",
     description: "Extra long grain, real aroma, and traditional taste. Aged to perfection and processed with state-of-the-art Sortex quality tech.",
     images: [
-      "assets/1Kg_front.jpeg",
-      "assets/1Kg_back.jpeg"
+      "/assets/1Kg_front.jpeg",
+      "/assets/1Kg_back.jpeg"
     ]
   },
   {
@@ -38,7 +38,7 @@ const PRODUCTS: Product[] = [
     weight: "5 KG",
     description: "Our signature family pack. The same premium quality in a traditional woven-style packaging for heritage preservation.",
     images: [
-      "assets/5kg_front.jpeg"
+      "/assets/5kg_front.jpeg"
     ]
   }
 ];
@@ -52,6 +52,16 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const [currentIdx, setCurrentIdx] = useState(0);
+
+  useEffect(() => {
+    if (product.images.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % product.images.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [product.images.length]);
 
   const nextImage = () => {
     setCurrentIdx((prev) => (prev + 1) % product.images.length);
@@ -157,8 +167,9 @@ export default function App() {
           
           <div className="hidden md:flex items-center gap-8 text-[11px] uppercase tracking-widest font-bold">
             <a href="#home" className="text-brand-gold">HOME</a>
-            <a href="#catalogue" className="hover:text-brand-gold transition-colors">THE PROCESS</a>
+            <a href="#catalogue" className="hover:text-brand-gold transition-colors">ORDER RICE</a>
             <a href="#heritage" className="hover:text-brand-gold transition-colors">HERITAGE</a>
+            <a href="#contact" className="hover:text-brand-gold transition-colors">CONTACT</a>
             <div className="h-6 w-px bg-white/20 mx-2"></div>
             <a 
               href={mainWhatsAppLink}
@@ -233,28 +244,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* Feature Highlight */}
-      <section id="heritage" className="py-24 px-6 md:px-12 border-y border-white/5 bg-brand-dark">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 justify-between">
-          <div className="max-w-md">
-            <span className="text-brand-gold font-mono text-[10px] tracking-[0.3em] uppercase mb-4 block">The Process</span>
-            <h2 className="text-4xl md:text-5xl font-serif font-medium mb-6 italic">Ancestral Wisdom Meets Modern Precision</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 flex-1">
-            <div className="p-8 border border-white/10 rounded-2xl">
-              <ShieldCheck size={28} className="text-brand-gold mb-6" />
-              <h3 className="text-xl font-serif font-bold mb-3 tracking-wide">Premium Polishing</h3>
-              <p className="text-sm text-white/50 leading-relaxed">Multiple stages of cleaning and de-husking ensure only the purest grains reach your kitchen.</p>
-            </div>
-            <div className="p-8 border border-white/10 rounded-2xl">
-              <MapPin size={28} className="text-brand-gold mb-6" />
-              <h3 className="text-xl font-serif font-bold mb-3 tracking-wide">Hadoti Selection</h3>
-              <p className="text-sm text-white/50 leading-relaxed">Grown in the mineral-rich soil of Bundi and Kota, famed for historic aromatic rice production.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Catalogue Section */}
       <section id="catalogue" className="py-32 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
@@ -273,6 +262,28 @@ export default function App() {
             {PRODUCTS.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Feature Highlight / Heritage */}
+      <section id="heritage" className="py-24 px-6 md:px-12 border-y border-white/5 bg-brand-dark">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 justify-between">
+          <div className="max-w-md">
+            <span className="text-brand-gold font-mono text-[10px] tracking-[0.3em] uppercase mb-4 block">The Heritage</span>
+            <h2 className="text-4xl md:text-5xl font-serif font-medium mb-6 italic">Ancestral Wisdom Meets Modern Precision</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 flex-1">
+            <div className="p-8 border border-white/10 rounded-2xl">
+              <ShieldCheck size={28} className="text-brand-gold mb-6" />
+              <h3 className="text-xl font-serif font-bold mb-3 tracking-wide">Premium Polishing</h3>
+              <p className="text-sm text-white/50 leading-relaxed">Multiple stages of cleaning and de-husking ensure only the purest grains reach your kitchen.</p>
+            </div>
+            <div className="p-8 border border-white/10 rounded-2xl">
+              <MapPin size={28} className="text-brand-gold mb-6" />
+              <h3 className="text-xl font-serif font-bold mb-3 tracking-wide">Hadoti Selection</h3>
+              <p className="text-sm text-white/50 leading-relaxed">Grown in the mineral-rich soil of Bundi and Kota, famed for historic aromatic rice production.</p>
+            </div>
           </div>
         </div>
       </section>
